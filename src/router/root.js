@@ -6,6 +6,7 @@ import memberRouter from './memberRouter';
 const { createBrowserRouter } = require("react-router-dom");
 
 const Main = lazy(()=>import("../pages/webtoon/MainPage"))
+const Mypage = lazy(() => import("../pages/member/MyPage"))
 // const Today = lazy(()=>import("../pages/TodayPage"))
 // const Genre = lazy(()=>import("../pages/GenrePage"))
 // const Platform = lazy(()=>import("../pages/PlatformPage"))
@@ -22,6 +23,10 @@ const root = createBrowserRouter([
     {
         path: 'member',
         children: memberRouter()
+    },
+    {
+        path: 'mypage',
+        element: <Suspense><Mypage /></Suspense>
     },
 ])
 

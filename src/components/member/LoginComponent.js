@@ -1,12 +1,5 @@
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
-// import Button from '@mui/material/Button';
-// import CssBaseline from '@mui/material/CssBaseline';
-// import TextField from '@mui/material/TextField';
-// import FormControlLabel from '@mui/material/FormControlLabel';
-// import Checkbox from '@mui/material/Checkbox';
-// import Link from '@mui/material/Link';
-// import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
@@ -15,11 +8,7 @@ import google from '../../images/google.png';
 import naver from '../../images/naver.png';
 import kakao from '../../images/kakao.png';
 import { Link, useNavigate } from "react-router-dom";
-import { getKakaoLoginLink } from '../../api/kakaoApi';
-import { getNaverLoginLink } from '../../api/naverApi';
 
-const kakaologin = getKakaoLoginLink()
-const naverlogin = getNaverLoginLink()
 
 function LoginComponent() {
 
@@ -33,6 +22,16 @@ function LoginComponent() {
         password: data.get('password'),
         });
     };
+
+    const onNaverLogin = () => {
+      window.location.href = "http://localhost:8080/oauth2/authorization/naver"
+    }
+    const onGoogleLogin = () => {
+      window.location.href = "http://localhost:8080/oauth2/authorization/google"
+    }
+    const onKakaoLogin = () => {
+      window.location.href = "http://localhost:8080/oauth2/authorization/kakao"
+    }
 
 
 
@@ -58,9 +57,9 @@ function LoginComponent() {
             SNS 계정으로 로그인
           </Typography>
           <Box sx = {{ display:'flex', justifyContent: 'center', mt:5}}>
-          <Link to={kakaologin}><img src={google} alt="google" style={{ width: "50px", margin:10}} value="google"/></Link>
-          <Link to={naverlogin}><img src={naver} alt="naver" style={{ width: "50px" , margin:10}} value="naver"/></Link>
-          <Link to={kakaologin}><img src={kakao} alt="kakao" style={{ width: "50px" ,margin:10}} value="kakao"/></Link>
+            <img src={google} alt="google" style={{ width: "50px", margin:10}} value="google"onClick={onGoogleLogin}/>
+            <img src={naver} alt="naver" style={{ width: "50px" , margin:10}} value="naver" onClick={onNaverLogin}/>
+            <img src={kakao} alt="kakao" style={{ width: "50px" ,margin:10}} value="kakao" onClick={onKakaoLogin}/>
           </Box>
         </Box>
 

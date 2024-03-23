@@ -7,7 +7,7 @@ const jwtAxios = axios.create()
 const refreshJWT = async (accessToken, refreshToken) => {
     const host = API_SERVER_HOST
     const header = {headers:{'Authorization':`Bearer ${accessToken}`}}
-
+    
     const res = await axios.get(`${host}/api/member/refresh?refreshToken=${refreshToken}`, header)
    
     //새로 만들어진 액세스토큰과 리프레시 토큰 리턴

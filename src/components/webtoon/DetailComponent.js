@@ -33,19 +33,18 @@ const initState = {
 const size = 20
 const value = 'detail'
 
-function DetailComponent({id}) {
+function DetailComponent({id, genre}) {
     const [webtoon, setWebtoon] = useState(initData)
     const [serverData, setServerData] = useState(initState);
-    const [genre, setGenre]= useState()
+    const [genres, setGenres]= useState(genre)
     const [url, setUrl] = useState('')
     const navigate = useNavigate();
 
     useEffect(()=>{
-
         window.scrollTo(0, 0)
         get(id).then(data => {
             setWebtoon(data)
-            setGenre(data.genre) 
+            setGenres(data.genre) 
             setUrl(data.url)
         })
     },[id])
@@ -54,7 +53,7 @@ function DetailComponent({id}) {
         getList({genre, value, size, id}).then(data =>{
             setServerData(data)
         })
-    },[genre, id])
+    },[id])
 
     const postUrl = () =>{
         window.location.href= url

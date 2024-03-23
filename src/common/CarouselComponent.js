@@ -7,7 +7,7 @@ import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import IconButton from '@mui/material/IconButton';
 import WebtoonCardComponent from './WebtoonCardComponent';
 
-function RecommendComponent(props) {
+function CarouselComponent(props) {
     const responsive = {
         desktop: {
           breakpoint: { max: 3000, min: 1024 },
@@ -52,7 +52,7 @@ function RecommendComponent(props) {
                         // showDots={false}
             >
               {props.serverData.dtoList.map((webtoon,index) => (
-                <WebtoonCardComponent webtoon={webtoon} />
+                <WebtoonCardComponent key={index} webtoon={webtoon} />
               ))}   
           </Carousel>
         </Container>
@@ -61,4 +61,4 @@ function RecommendComponent(props) {
     );
 }
 
-export default RecommendComponent;
+export default CarouselComponent;

@@ -17,7 +17,7 @@ function WebtoonListComponent(props) {
         <Grid container spacing={{ xs: 2 }}>
           {props.serverData.dtoList.map((webtoon,index) => (
           <Grid item xs={2} key={webtoon.id}>
-            <div onClick={()=> moveToDetail(webtoon.id)}>
+            <div onClick={()=> moveToDetail(webtoon.id, webtoon.genre)}>
               <div className="flex relative z-0">
                 <img    
                   srcSet={`${webtoon.img}`}

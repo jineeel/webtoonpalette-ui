@@ -1,18 +1,15 @@
 import { useDispatch, useSelector } from "react-redux"
 import { Navigate, createSearchParams, useNavigate } from "react-router-dom"
 import { logout } from "../slice/loginSlice"
+import { setMemberInfo } from "../slice/memberSlice"
 
 const useCustomLogin = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const loginState = useSelector(state => state.loginSlice)
 
-    const isLogin = loginState.email ? true : false;
+    const isLogin = loginState.providerId ? true : false;
 
-    // const doLogin = async (loginParam) => {
-    //     const action = await dispatch(loginPostAsync(loginParam))
-    //     return action.payload
-    // }
 
     const doLogout = () => {
         dispatch(logout())

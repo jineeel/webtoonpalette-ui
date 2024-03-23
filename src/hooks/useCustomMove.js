@@ -79,31 +79,15 @@ const useCustomMove = () => {
         navigate({pathname:`../platform`, search: queryStr})
     }
 
-    const moveToDetail = (num) => {
+    const moveToDetail = (num, genre) => {
+        queryStr = createSearchParams({genre:genre}).toString()
         navigate({
             pathname: `../webtoon/${num}`,
-            search: queryDefault
+            search: queryStr
         })
     }
 
-    // const moveRecommend = (pageParam, num) => {
 
-    //     console.log("num=="+num)
-    //     console.log("pageParam.page=="+pageParam.page)
-    //     if(pageParam){
-    //         const pageNum = getNum(pageParam.page, 1)
-    //         const sizeNum = getNum(12, 12)
-    //         const genreSt = getValue(pageParam.genre,'')
-    //         const finSt = getValue(pageParam.fin, true)
-    //         if(finSt){
-    //             queryStr = createSearchParams({page:pageNum, size:sizeNum, genre:genreSt, fin:finSt}).toString()
-    //         }else {
-    //             queryStr = createSearchParams({page:pageNum, size:sizeNum, genre:genreSt}).toString()
-    //         }
-           
-    //     }
-    //     navigate({pathname:`../webtoon/${num}`, search: queryStr})
-    // }
 
     return {moveTodayList, moveGenreList, movePlatformList, moveToDetail, page, size, updateDay, genre, refresh, platform};
 }

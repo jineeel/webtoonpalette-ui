@@ -1,8 +1,8 @@
 import { Suspense, lazy } from "react";
 
 const Login = lazy(()=> import("../pages/member/LoginPage"))
-const Kakao = lazy(()=> import("../pages/member/KakaoRedirectPage"))
-const Naver = lazy(()=> import("../pages/member/NaverRedirectPage"))
+const Kakao = lazy(()=> import("../pages/member/RedirectPage"))
+const Modify = lazy(() => import("../pages/member/ModifyPage"))
 
 const memberRouter = () => {
     return [
@@ -10,18 +10,15 @@ const memberRouter = () => {
             path: 'login',
             element: <Suspense><Login/></Suspense>
         },
-        // {
-        //     path: "logout",
-        //     element: <Suspense><Logout /></Suspense>
-        // },
         {
-            path: 'kakao',
+            path: 'redirect',
             element: <Suspense><Kakao /></Suspense>
         },
         {
-            path: 'naver',
-            element: <Suspense><Naver /></Suspense>
-        },
+            path: 'modify',
+            element : <Suspense><Modify /></Suspense>
+        }
+        
     ]
 
 }

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import Toolbar from '@mui/material/Toolbar';
 import { useNavigate } from "react-router-dom";
 import IconButton from '@mui/material/IconButton';
@@ -10,11 +10,20 @@ import { Container } from '@mui/material';
 import logo from '../../images/logoNew.png'
 import Search from './Search';
 import { useSelector } from 'react-redux';
-import Avatar from '@mui/material/Avatar';
+import { API_SERVER_HOST } from '../../api/webtoonApi';
+import profileIcon from '../../images/profile_icon.png'
+
+const host = API_SERVER_HOST
 
 function Header(props) {
   const navigate = useNavigate();
   const loginState = useSelector(state => state.loginSlice)
+  const memberInfo = useSelector(state => state.memberSlice)
+  const [imgFile, setImgFile] = useState(``);
+
+  useEffect(()=>{
+    setImgFile(`${host}/api/member/view/s_${memberInfo.uploadFileName}`)
+  }, [loginState, memberInfo])
 
   return (
     <Container pixed="true">
@@ -33,16 +42,16 @@ function Header(props) {
             navigate("/");
           }}
         />
+
         <div className='flex'>
           <Search />
-          {/* <IconButton sx={{ mr: 1 }} component={Link} to="/search"><SearchIcon fontSize="small" /></IconButton> */}
           <IconButton sx={{ mr: 1 }} component={Link} to="/list"><FolderIcon fontSize="small" /></IconButton>
           <IconButton sx={{ mr: 1 }} component={Link} to="/favorite"><FavoriteIcon fontSize="small" /></IconButton>
 
-          {loginState.username ?
-           <Avatar alt="R" src="../../images/google.png" />
+          {loginState.providerId ?
+            <Link to={'/mypage'}><img src={ imgFile ? imgFile :  profileIcon} alt="" className='size-12 rounded-full object-cover'/></Link>
           : 
-          <IconButton sx={{ mr: 1 }} component={Link} to="/member/login"><AccountCircleIcon fontSize="medium" /></IconButton> }
+            <IconButton sx={{ mr: 1 }} component={Link} to="/member/login"><AccountCircleIcon fontSize="large" /></IconButton> }
         </div>
       </Toolbar>
 

@@ -1,8 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import loginSlice from "./slice/loginSlice";
+import memberSlice from "./slice/memberSlice";
 
 export default configureStore({
     reducer: {
-        "loginSlice" : loginSlice
-    }
+        "loginSlice" : loginSlice,
+        "memberSlice" : memberSlice,
+    },
+    middleware: getDefaultMiddleware => getDefaultMiddleware({ serializableCheck: false }),
 })
