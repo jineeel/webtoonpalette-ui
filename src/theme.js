@@ -18,9 +18,9 @@ const theme = createTheme({
       dark: '#282828',
     },
     red: {
-      main: "#fec9b9",
-      light: "##db1632",
-      dark: "#C90000",
+      main: "#BF4D87",
+      light: "#C487A6",
+      dark: "#BF4D87",
     },
 
   },

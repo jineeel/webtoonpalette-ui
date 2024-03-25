@@ -26,7 +26,18 @@ const memberSlice = createSlice({
             state.social = action.payload.social;
             state.role = action.payload.role;
             state.genreNames = action.payload.genreNames;
+        },
+        resetMemberInfo: (state) => {
+            state.id = '';
+            state.username = '';
+            state.nickname = '';
+            state.uploadFileName = '';
+            state.providerId = '';
+            state.social = '';
+            state.role = '';
+            state.genreNames = [];
         }
+
         
     },
    
@@ -38,5 +49,5 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, memberSlice.reducer);
 
-export const { setMemberInfo } = memberSlice.actions
+export const { setMemberInfo, resetMemberInfo } = memberSlice.actions
 export default persistedReducer

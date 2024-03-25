@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import naver from '../images/naver_webtoon.png';
 import kakao from '../images/kakao_webtoon.png';
 import useCustomMove from '../hooks/useCustomMove';
@@ -10,7 +10,9 @@ import { convertGenre, convertFanCount } from './convertValue';
 
 function WebtoonCardComponent({webtoon}) {
 
-  const {moveToDetail} = useCustomMove();
+  
+  const {moveToDetail} = useCustomMove()
+  
     return (
       <div key={webtoon.id} onClick={()=> moveToDetail(webtoon.id, webtoon.genre)} className='ml-1 mr-1 mb-10 relative rounded-md shadow-xl'> 
         <div className="flex relative z-0 rounded-lg">
@@ -42,7 +44,6 @@ function WebtoonCardComponent({webtoon}) {
             </div>
             <div className='text-xs'>
               {webtoon.fanCount != 0 ? <span className='mr-1'><VisibilityIcon fontSize="small" color="disabled" sx={{mr:0.5}}/>{convertFanCount(webtoon.fanCount)}</span> : <></>}
-              {/* <span className='mr-1'><FavoriteIcon fontSize="small" color="disabled" sx={{mr:0.5}}/>{convertFanCount(webtoon.fanCount)}</span> */}
             </div>
           </div>
       </div>

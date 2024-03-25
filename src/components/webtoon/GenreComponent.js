@@ -11,6 +11,7 @@ import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Typography from '@mui/material/Typography';
 import useCustomValue from '../../hooks/useCustomValue';
+import { useSelector } from 'react-redux';
 
 const initState = {
     dtoList:[], pageNumList:[], pageRequestDTO: null, prev: false, next: false,
@@ -19,17 +20,17 @@ const initState = {
 const value = 'genre'
 
 function GenreComponent(props) {
+    const tabValue = localStorage.getItem("tabValue") ? localStorage.getItem("tabValue") : "ROMANCE";
+    const memberInfo = useSelector(state => state.memberSlice)
 
     const {page, size, moveGenreList, refresh} = useCustomMove()
     const [serverData, setServerData] = useState(initState);
-    const [genre, setGenre] = useState('ROMANCE'); //추후 사용자의 취향으로 초기화
-    // const [tabValue, setTabValue] = useState(false);
+    const [genre, setGenre] = useState(tabValue);
 
     const { fin, checkFinished }= useCustomValue()
 
     const handleChange = (event, newValue) => {
         setGenre(newValue);
-    //   setTabValue(true);
         moveGenreList({ genre: newValue });
     };
 
@@ -38,15 +39,18 @@ function GenreComponent(props) {
       }, [fin]);
 
     useEffect(()=>{
-        moveGenreList({ genre: genre});
-    },[])
+        localStorage.setItem('tabValue',genre);
+        moveGenreList({ page: page, genre: genre});
+    },[genre])
      
     useEffect(()=>{
         getList({page,size,genre,fin,value}).then(data =>{
+            window.scrollTo(0,0)
             setServerData(data)
-            // setTabValue(false);
+            
         })
     }, [page,size,genre,refresh,fin]);
+
 
     return (
         <div>

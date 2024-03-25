@@ -19,9 +19,11 @@ const initState = {
 const value = 'platform'
 
 function PlatformComponent(props) {
+    const tabValue = localStorage.getItem("tabValue") ? localStorage.getItem("tabValue") : 'naver';
+    
     const {page, size, movePlatformList, refresh} = useCustomMove()
     const [serverData, setServerData] = useState(initState);
-    const [platform, setPlatform] = useState('naver');
+    const [platform, setPlatform] = useState(tabValue);
     const { fin, genre, checkFinished, selectGenre, selectList }= useCustomValue()
 
     const handleChange = (event, newValue) => {
@@ -38,11 +40,15 @@ function PlatformComponent(props) {
     }, [fin]);
     
     useEffect(()=>{
-        movePlatformList({ genre: genre, platform:platform});
-    },[genre])
+        
+        movePlatformList({ page: page, genre: genre, platform:platform});
+        localStorage.setItem('tabValue',platform);
+    },[platform, genre])
 
     useEffect(()=>{
+        console.log("page:"+page)
         getList({page,size,platform,genre,fin,value}).then(data =>{
+            window.scrollTo(0,0)
             setServerData(data)
         })
     }, [page,size,platform,refresh,genre,fin]);

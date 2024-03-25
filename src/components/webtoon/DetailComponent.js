@@ -11,6 +11,10 @@ import { grey } from '@mui/material/colors';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import adult from '../../images/adult_icon.png'
 import CarouselComponent from '../../common/CarouselComponent';
+import { postFavorite, getFavorite, deleteFavorite } from '../../api/favoriteApi';
+import { useSelector } from 'react-redux';
+import useCustomLogin from '../../hooks/useCustomLogin'
+import LoginModalComponent from '../../common/LoginModalComponent';
 
 const initData = {
     id : 0,
@@ -36,36 +40,88 @@ const value = 'detail'
 function DetailComponent({id, genre}) {
     const [webtoon, setWebtoon] = useState(initData)
     const [serverData, setServerData] = useState(initState);
-    const [genres, setGenres]= useState(genre)
     const [url, setUrl] = useState('')
-    const navigate = useNavigate();
+    const [favorite, setFavorite ] = useState(false);
+    const [favoriteColor, setFavoriteColor] = useState("secondary");
+    const [modalLogin, setModalLogin] = useState(false)
+
+    const memberInfo = useSelector(state => state.memberSlice)
+    const { isLogin } = useCustomLogin()
+
+    const memberId = memberInfo.id
+    const webtoonId = id;
+
+    // useEffect(()=>{
+    //     localStorage.setItem('redirect', value);
+    //     return () => {
+    //         localStorage.removeItem('redirect');
+    //     }
+    // },[])
 
     useEffect(()=>{
-        window.scrollTo(0, 0)
         get(id).then(data => {
             setWebtoon(data)
-            setGenres(data.genre) 
             setUrl(data.url)
+            window.scrollTo(0, 0)
         })
-    },[id])
-
-    useEffect(()=>{
         getList({genre, value, size, id}).then(data =>{
             setServerData(data)
         })
     },[id])
 
+
+    useEffect(()=>{
+        if(memberId != ''){
+            getFavorite({memberId, webtoonId}).then(data=>{
+                setFavorite(data.result)
+                if(data.result>0){
+                    setFavoriteColor("red")
+                }else{
+                    setFavoriteColor("secondary")
+                }
+            })
+        }
+    },[id,favorite])
+
     const postUrl = () =>{
         window.location.href= url
+    }
+ 
+    const [openToggle, setOpenToggle] = useState(false)
+    const handleClickFavorite = () =>  {
+        
+        if(!isLogin){
+
+            setModalLogin(true)
+            setOpenToggle(!openToggle)
+            
+        }else{
+
+            if(favorite>0){
+                // 이미 눌렀으면 좋아요 취소
+                deleteFavorite(favorite).then(data=>{
+                    setFavorite(0)
+                    setFavoriteColor("secondary")
+                })
+
+            }else{ 
+
+                postFavorite({memberId, webtoonId}).then(data => { 
+                    setFavorite(data.id)
+                    setFavoriteColor("red")
+                })
+    
+            }
+        }  
     }
 
     return (
         <div>
+            {modalLogin? <LoginModalComponent openToggle={openToggle} /> : <></> }
             <Container fixed>
             <div className='flex flex-row left-0 mt-6 mb-16 ml-2 relative'>
                 <div className='relative'>
-                <img    
-                    srcSet={`${webtoon.img}`}
+                    <img    
                     src={`${webtoon.img}`}
                     alt={webtoon.title}
                     loading="lazy"
@@ -92,7 +148,7 @@ function DetailComponent({id, genre}) {
                         </div>
                         <div className='absolute bottom-1'>
                             <Button variant="contained" size='large' sx={{width:200, height:60, boxShadow: 'none',}} onClick={postUrl}><Typography variant='h6' color='white'>웹툰 보러가기</Typography></Button>
-                            <Button variant='outlined' sx={{width:60, height:60, ml:1}} color='secondary'><FavoriteIcon color='secondary' /></Button> {/** 하트 누르면 색 빨간색으로 */}
+                            <Button variant='outlined' sx={{width:60, height:60, ml:1}} color={favoriteColor} onClick={handleClickFavorite}  data-modal-target="default-modal" data-modal-toggle="default-modal" ><FavoriteIcon color={favoriteColor} /></Button> {/** 하트 누르면 색 빨간색으로 */}
                             <Button variant="outlined" sx={{width:60, height:60, ml:1}} color='secondary'><CreateNewFolderIcon color='secondary'/></Button>
                         </div>
                     </div>

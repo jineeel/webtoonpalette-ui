@@ -12,12 +12,13 @@ import useCustomMove from '../hooks/useCustomMove';
 
 function WebtoonListComponent(props) {
 
-    const {moveToDetail} = useCustomMove();
+    const {moveToDetail, page} = useCustomMove();
+    
     return (
         <Grid container spacing={{ xs: 2 }}>
           {props.serverData.dtoList.map((webtoon,index) => (
           <Grid item xs={2} key={webtoon.id}>
-            <div onClick={()=> moveToDetail(webtoon.id, webtoon.genre)}>
+            <div onClick={()=> moveToDetail(webtoon.id, webtoon.genre, page)}>
               <div className="flex relative z-0">
                 <img    
                   srcSet={`${webtoon.img}`}

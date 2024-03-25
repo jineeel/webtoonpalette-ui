@@ -32,7 +32,7 @@ const beforeReq = (config) => {
     }    
 
     const {accessToken} = memberInfo
-    console.log("---------------"+accessToken)
+    // console.log("---------------"+accessToken)
     // Authorization 헤더 처리
     config.headers.Authorization = `Bearer ${accessToken}`
     return config
@@ -54,7 +54,6 @@ const beforeRes = async (res) => {
         const memberCookieValue = getCookie("member")
         const result = await refreshJWT(memberCookieValue.accessToken, memberCookieValue.refreshToken)
         console.log("refreshJWT RESULT", result)
-        //정상적인 경우 새로운 액세스토큰과 리프레쉬토큰이 온다
         //저장
         memberCookieValue.accessToken = result.accessToken
         memberCookieValue.refreshToken = result.refreshToken

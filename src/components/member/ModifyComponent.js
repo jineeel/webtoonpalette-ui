@@ -7,6 +7,7 @@ import memberSlice from './../../slice/memberSlice';
 import { setMemberInfo } from '../../slice/memberSlice';
 import { Typography } from '@mui/material';
 import GenreSelectComponent from './GenreSelectComponent';
+import useCustomLogin from '../../hooks/useCustomLogin';
 
 const host = API_SERVER_HOST
 
@@ -24,6 +25,7 @@ function ModifyComponent({props}) {
     const [imgFile, setImgFile] = useState(``);
     const [changeImage, setChangeImage] = useState(false)
     const [selectedGenre, setSelectedGenre] = useState([]);
+    const { isLogin, moveToLoginReturn } = useCustomLogin(); 
 
     const uploadRef = useRef()
 
@@ -32,6 +34,10 @@ function ModifyComponent({props}) {
         setImgFile(`${host}/api/member/view/s_${memberInfo.uploadFileName}`)
 
     },[loginInfo, memberInfo])
+
+    if(!isLogin){
+        return moveToLoginReturn()
+    }
 
     const handleChangeMember = (e) => {
         member[e.target.name] = e.target.value

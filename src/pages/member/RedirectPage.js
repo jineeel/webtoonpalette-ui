@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
-
-import { useSearchParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import useCustomLogin from '../../hooks/useCustomLogin';
 import { login } from '../../slice/loginSlice';
@@ -10,19 +10,33 @@ import { setMemberInfo } from '../../slice/memberSlice';
 function RedirectPage(props) {
 
     const [searchParams] = useSearchParams()
-    const { moveToPath } = useCustomLogin()
+    // const memberInfo = useSelector(state => state.memberSlice)
+
+    const navigate = useNavigate()
     const id = searchParams.get("id")
     const dispatch = useDispatch()
 
     useEffect(() => {
-        getMember(id).then(memberInfo => {
-            dispatch(login(memberInfo))
-            dispatch(setMemberInfo(memberInfo))
-            moveToPath("/")
-        })
-      
-        }, [id])
+        if (id) {
+            getMember(id).then(memberInfo => {
 
+                dispatch(login(memberInfo));
+                dispatch(setMemberInfo(memberInfo));
+                navigate('/');
+
+            })
+            // if (localStorage.getItem("redirect") === "detail") {
+            //     navigate(-1);
+            // } else {
+            //     navigate('/');
+            // }
+        }
+    }, [id])
+
+    // useEffect(()=>{
+       
+    // },[memberInfo])
+    
     return (
         <div></div>
     );

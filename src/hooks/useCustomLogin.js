@@ -19,9 +19,11 @@ const useCustomLogin = () => {
         navigate({pathname: path}, {replace:true})
 
     }
+
     const moveToLogin = () => {
         navigate({pathname:'/member/login'}, {replace:true})
     }
+    
     const moveToLoginReturn = () => {
         return <Navigate replace to ="/member/login/" />
     } 

@@ -4,6 +4,7 @@ import { Container } from '@mui/material';
 import LoginComponent from '../../components/member/LoginComponent';
 
 function LoginPage(props) {
+    
     return (
         <BasicLayout>
             <Container pixed="true">

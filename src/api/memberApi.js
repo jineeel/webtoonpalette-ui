@@ -11,7 +11,7 @@ export const getMember = async (id) => {
 
 export const putMember = async (providerId, member) => {
     const header =  {headers: {"Content-Type":"multipart/form-data"}}
-    const res = await axios.put(`${host}/${providerId}`, member, header)
+    const res = await jwtAxios.put(`${host}/${providerId}`, member, header)
 
     return res.data
 }

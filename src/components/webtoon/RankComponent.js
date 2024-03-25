@@ -8,6 +8,7 @@ import useCustomValue from '../../hooks/useCustomValue';
 import { getList } from '../../api/webtoonApi';
 import { Container } from '@mui/system';
 
+
 const initState = {
     dtoList:[], pageNumList:[], pageRequestDTO: null, prev: false, next: false,
     totoalCount: 0, prevPage: 0, nextPage: 0, totalPage: 0, current: 0 

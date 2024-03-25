@@ -17,27 +17,33 @@ const initState = {
 const value = 'today'
 
 function TodayComponent(props) {
+    const tabValue = localStorage.getItem("tabValue") ? localStorage.getItem("tabValue") : todayOfWeek();
+
     const {page, size, moveTodayList, refresh} = useCustomMove()
     const [serverData, setServerData] = useState(initState);
-    const [updateDay, setUpdateDay] = useState(todayOfWeek());
-    const [tabValue, setTabValue] = useState(false);
- 
+    const [updateDay, setUpdateDay] = useState(tabValue);
+    const fin = true;
+  
+    useEffect(() => {
+        localStorage.setItem('tabValue',updateDay);
+      }, [updateDay]);
+
     const handleChange = (event, newValue) => {
         setUpdateDay(newValue);
-        setTabValue(true);
         moveTodayList({ updateDay: newValue });
+        
     };
 
     useEffect(()=>{
-        moveTodayList({ updateDay: updateDay });
+        moveTodayList({ page:page, updateDay: updateDay });
     },[])
      
     useEffect(()=>{
-        getList({page,size,updateDay,tabValue,value}).then(data =>{
+        getList({page,size,updateDay,value,fin}).then(data =>{
+            window.scrollTo(0,0)
             setServerData(data)
-            setTabValue(false);
         })
-    }, [page,size,updateDay,refresh,tabValue]);
+    }, [page,size,updateDay,refresh]);
 
     return (
       <div> 

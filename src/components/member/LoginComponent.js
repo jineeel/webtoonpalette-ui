@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useEffect} from 'react';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -8,20 +8,9 @@ import google from '../../images/google.png';
 import naver from '../../images/naver.png';
 import kakao from '../../images/kakao.png';
 import { Link, useNavigate } from "react-router-dom";
-
+import useCustomLogin from "../../hooks/useCustomLogin";
 
 function LoginComponent() {
-
-    const navigate = useNavigate();
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-        email: data.get('email'),
-        password: data.get('password'),
-        });
-    };
 
     const onNaverLogin = () => {
       window.location.href = "http://localhost:8080/oauth2/authorization/naver"
@@ -33,15 +22,13 @@ function LoginComponent() {
       window.location.href = "http://localhost:8080/oauth2/authorization/kakao"
     }
 
-
-
   return (
 
       <Container component="main" maxWidth="xs">
     
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 4,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -53,10 +40,10 @@ function LoginComponent() {
           <Typography variant="h6">
             로그인
           </Typography>
-          <Typography variant="body1" sx={{ mt: 6}}>
+          <Typography variant="body1" sx={{ mt: 4}}>
             SNS 계정으로 로그인
           </Typography>
-          <Box sx = {{ display:'flex', justifyContent: 'center', mt:5}}>
+          <Box sx = {{ display:'flex', justifyContent: 'center', mt:4}}>
             <img src={google} alt="google" style={{ width: "50px", margin:10}} value="google"onClick={onGoogleLogin}/>
             <img src={naver} alt="naver" style={{ width: "50px" , margin:10}} value="naver" onClick={onNaverLogin}/>
             <img src={kakao} alt="kakao" style={{ width: "50px" ,margin:10}} value="kakao" onClick={onKakaoLogin}/>

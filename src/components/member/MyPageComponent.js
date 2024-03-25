@@ -4,15 +4,16 @@ import useCustomLogin from "../../hooks/useCustomLogin";
 import { Button, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { persistor } from "../..";
-
+import { resetMemberInfo } from '../../slice/memberSlice';
 
 function MyPageComponent(props) {
 
     const {  moveToPath, isLogin, moveToLoginReturn, doLogout } = useCustomLogin()
-    
+    const dispatch = useDispatch()
     if(!isLogin){
         return moveToLoginReturn()
     }
+    
     const purge = async () => {
         await persistor.purge();
     }
@@ -20,6 +21,7 @@ function MyPageComponent(props) {
     const handleClickLogout = () => {
         doLogout()
         purge()
+        dispatch(resetMemberInfo())
         moveToPath("/")
     }
     return (

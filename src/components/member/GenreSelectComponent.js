@@ -33,7 +33,7 @@ function GenreSelectComponent(props) {
 
     const [localSelectedGenre, setLocalSelectedGenre] = useState([]);
 
-    console.log("genreNames:!!"+genreNames)
+    console.log("genreNames:"+genreNames)
     useEffect(() => {
         if (genreNames && Array.isArray(genreNames)) {
             setLocalSelectedGenre(genreNames.filter(genre => genreList.includes(genre)).slice(0, 3));

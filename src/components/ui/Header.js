@@ -11,7 +11,8 @@ import logo from '../../images/logoNew.png'
 import Search from './Search';
 import { useSelector } from 'react-redux';
 import { API_SERVER_HOST } from '../../api/webtoonApi';
-import profileIcon from '../../images/profile_icon.png'
+import profileIcon from '../../images/profile_icon.png';
+import PaletteIcon from '@mui/icons-material/Palette';
 
 const host = API_SERVER_HOST
 
@@ -25,6 +26,9 @@ function Header(props) {
     setImgFile(`${host}/api/member/view/s_${memberInfo.uploadFileName}`)
   }, [loginState, memberInfo])
 
+  const handleClickMenu = () => {
+    localStorage.removeItem('tabValue')
+  }
   return (
     <Container pixed="true">
       <Toolbar
@@ -45,7 +49,7 @@ function Header(props) {
 
         <div className='flex'>
           <Search />
-          <IconButton sx={{ mr: 1 }} component={Link} to="/list"><FolderIcon fontSize="small" /></IconButton>
+          <IconButton sx={{ mr: 1 }} component={Link} to="/list"><PaletteIcon fontSize="small" /></IconButton>
           <IconButton sx={{ mr: 1 }} component={Link} to="/favorite"><FavoriteIcon fontSize="small" /></IconButton>
 
           {loginState.providerId ?
@@ -59,11 +63,11 @@ function Header(props) {
           <div className="w-4/5" >
               <ul className="flex p-4 text-gray-700 font-medium">
                 <li className="px-4"> <Link to={'/'}>추천 웹툰</Link> </li>
-                <li className="px-4"> <Link to={'/today'}>오늘의 웹툰</Link> </li>
-                <li className="px-4"> <Link to={'/genre'}>장르</Link> </li>
-                <li className="px-4"> <Link to={'/rank'}>랭킹</Link> </li>
-                <li className="px-4"> <Link to={'/platform'}>플랫폼</Link> </li>
-               
+                <li className="px-4" onClick={handleClickMenu}> <Link to={'/today'}>오늘의 웹툰</Link> </li>
+                <li className="px-4" onClick={handleClickMenu}> <Link to={'/genre'}>장르</Link> </li>
+                <li className="px-4" onClick={handleClickMenu}> <Link to={'/rank'}>랭킹</Link> </li>
+                <li className="px-4" onClick={handleClickMenu}> <Link to={'/platform'}>플랫폼</Link> </li>
+                <li className="px-4"> <Link to={'/platform'}>추천 팔레트</Link> </li>
               </ul>
           </div>
       </nav>

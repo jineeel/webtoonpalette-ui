@@ -8,6 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import WebtoonCardComponent from './WebtoonCardComponent';
 
 function CarouselComponent(props) {
+  
     const responsive = {
         desktop: {
           breakpoint: { max: 3000, min: 1024 },
@@ -44,7 +45,7 @@ function CarouselComponent(props) {
             <Typography variant='h5' sx={{fontWeight:600, mt:5, mb:6}}> 이 작품과 비슷한 작품</Typography>
             <Carousel  responsive={responsive}
                         autoPlay={true}
-                        infinite={true}
+                        // infinite={true}
                         partialVisible={false}
                         renderButtonGroupOutside={true} 
                         customButtonGroup={<ButtonGroup />}
