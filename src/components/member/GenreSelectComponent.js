@@ -12,6 +12,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
+import { red } from '@mui/material/colors';
 
 const genreList = [
     'ROMANCE','FANTASY','ROMANCE_FANTASY','ACTION','DAILY','THRILLER','COMIC','MARTIAL','DRAMA','SPORTS'
@@ -33,7 +34,6 @@ function GenreSelectComponent(props) {
 
     const [localSelectedGenre, setLocalSelectedGenre] = useState([]);
 
-    console.log("genreNames:"+genreNames)
     useEffect(() => {
         if (genreNames && Array.isArray(genreNames)) {
             setLocalSelectedGenre(genreNames.filter(genre => genreList.includes(genre)).slice(0, 3));
@@ -56,8 +56,8 @@ function GenreSelectComponent(props) {
 
     return (
         <div>
-            <FormControl sx={{ m: 1, width: 350 }}>
-                <InputLabel id="demo-multiple-chip-label">장르 선택</InputLabel>
+            <FormControl sx={{ m: 1, width: 300 }}>
+                <InputLabel id="demo-multiple-chip-label">장르</InputLabel>
                 <Select
                     labelId="demo-multiple-chip-label"
                     id="demo-multiple-chip"
@@ -78,6 +78,7 @@ function GenreSelectComponent(props) {
                     <MenuItem
                     key={genre}
                     value={genre}
+
                     >
                     {convertGenre(genre)}
                     </MenuItem>

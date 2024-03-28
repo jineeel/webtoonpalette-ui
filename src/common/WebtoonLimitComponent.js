@@ -9,58 +9,14 @@ import finished from '../images/finished.png';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { Typography } from '@mui/material';
 import useCustomMove from '../hooks/useCustomMove';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import IconButton from '@mui/material/IconButton';
-import PaletteIcon from '@mui/icons-material/Palette';
-import { useSelector } from 'react-redux';
-import useCustomLogin from '../hooks/useCustomLogin';
-import { postFavorite, getFavorite, deleteFavorite } from '../api/favoriteApi';
 
-function WebtoonListComponent(props) {
-  //   const { isLogin } = useCustomLogin()
-  //   const [favorite, setFavorite ] = useState(false);
-  //   const [favoriteColor, setFavoriteColor] = useState("secondary");
-  //   const [modalLogin, setModalLogin] = useState(false)
-  //   const [openToggle, setOpenToggle] = useState(false)
+function WebtoonLimitComponent(props) {
+
     const {moveToDetail, page} = useCustomMove();
-
-  
-  //   const memberInfo = useSelector(state => state.memberSlice)
-  //   const memberId = memberInfo.id
-
-  //   const handleClickFavorite = (webtoonId) =>  {
-  
-  //     console.log("durl"+webtoonId)
-  //     if(!isLogin){
-
-  //         setModalLogin(true)
-  //         setOpenToggle(!openToggle)
-          
-  //     }else{
-
-  //         if(favorite>0){
-  //             // 이미 눌렀으면 좋아요 취소
-  //             deleteFavorite(favorite).then(data=>{
-  //                 setFavorite(0)
-  //                 setFavoriteColor("secondary")
-                 
-  //             })
-
-  //         }else{ 
-
-  //             postFavorite({memberId, webtoonId}).then(data => { 
-  //                 setFavorite(data.id)
-  //                 setFavoriteColor("red")
-  //             })
-  
-  //         }
-  
-  //     }  
-  // }
 
     return (
         <Grid container spacing={{ xs: 2 }}>
-          {props.serverData.dtoList.map((webtoon,index) => (
+          {props.serverData.dtoList.slice(0,6).map((webtoon,index) => (
           <Grid item xs={2} key={webtoon.id}>
             <div onClick={()=> moveToDetail(webtoon.id, webtoon.genre, page)} >
               <div className="flex relative z-0 ">
@@ -71,18 +27,7 @@ function WebtoonListComponent(props) {
                   loading="lazy"
                   className='w-48 h-48 rounded-lg object-cover shadow-lg lg:hover:scale-105 transition-transform ease-in-out duration-800'
                 />
-                {/* <div className='absolute z-10 bottom-1 left-1'>
-                <button className="bg-neutral-300 hover:bg-neutral-400 text-white font-bold pb-1 px-1 rounded-full"
-              onClick={(e)=> {
-                e.stopPropagation();
-                handleClickFavorite(webtoon.id);
-            }}>
-                  <FavoriteIcon color={favoriteColor} fontSize='small'  />
-                </button>
-                {/* <button className=" bg-neutral-800 hover:bg-neutral-500 text-white font-bold pb-1 px-1 rounded-full ml-1">
-                  <PaletteIcon color='primary' fontSize='small'/>
-                  </button> </div>*/}
-               
+            
                 <div className='w-6 absolute z-10 m-1 bottom-1 right-0'>
                   {webtoon.adult == 'Y' ? <img src={adult} alt="adult"/> : <></>}
                 </div>
@@ -104,7 +49,6 @@ function WebtoonListComponent(props) {
                   </div>
                   <div className='text-xs'>
                     {webtoon.fanCount != 0 ? <span className='mr-1'><VisibilityIcon fontSize="small" color="disabled" sx={{mr:0.5}}/>{convertFanCount(webtoon.fanCount)}</span> : <></>}
-                    {/* <span className='mr-1'><FavoriteIcon fontSize="small" color="disabled" sx={{mr:0.5}}/>{convertFanCount(webtoon.fanCount)}</span> */}
                   </div>
                 </div>
               </div>
@@ -117,4 +61,4 @@ function WebtoonListComponent(props) {
 
 
 
-export default WebtoonListComponent;
+export default WebtoonLimitComponent;

@@ -16,3 +16,12 @@ export const get = async (id) => {
     const res = await axios.get(`${prefix}/${id}`)
     return res.data
 }
+
+export const getSearch = async (pageParam) => {
+    let {keyword, page} = pageParam;
+    keyword = keyword.replace(/(\s*)/g, "")
+
+    const res = await axios.get(`${prefix}/search`,{params:{searchKeyword : keyword, page:page}})
+
+    return res.data
+}

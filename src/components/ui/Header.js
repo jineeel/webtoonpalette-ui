@@ -8,7 +8,7 @@ import FolderIcon from '@mui/icons-material/Folder';
 import { Link } from "react-router-dom";
 import { Container } from '@mui/material';
 import logo from '../../images/logoNew.png'
-import Search from './Search';
+import SearchComponent from '../search/SearchComponent'
 import { useSelector } from 'react-redux';
 import { API_SERVER_HOST } from '../../api/webtoonApi';
 import profileIcon from '../../images/profile_icon.png';
@@ -48,8 +48,8 @@ function Header(props) {
         />
 
         <div className='flex'>
-          <Search />
-          <IconButton sx={{ mr: 1 }} component={Link} to="/list"><PaletteIcon fontSize="small" /></IconButton>
+          <SearchComponent />
+          <IconButton sx={{ mr: 1}} component={Link} to="/list"><PaletteIcon fontSize="small" /></IconButton>
           <IconButton sx={{ mr: 1 }} component={Link} to="/favorite"><FavoriteIcon fontSize="small" /></IconButton>
 
           {loginState.providerId ?

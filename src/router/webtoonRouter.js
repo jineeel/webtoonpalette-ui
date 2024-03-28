@@ -8,7 +8,7 @@ const Platform = lazy(()=>import("../pages/webtoon/PlatformPage"))
 const Rank = lazy(()=>import("../pages/webtoon/RankPage"))
 const Detail = lazy(()=>import("../pages/webtoon/DetailPage"))
 
-const todayRouter = () => {
+const webtoonRouter = () => {
     return [
         {
             path: '',
@@ -41,5 +41,5 @@ const todayRouter = () => {
     ]
 }
 
-export default todayRouter;
+export default webtoonRouter;
 

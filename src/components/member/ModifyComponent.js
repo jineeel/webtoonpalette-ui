@@ -5,9 +5,10 @@ import profileIcon from '../../images/profile_icon.png'
 import { API_SERVER_HOST } from '../../api/webtoonApi';
 import memberSlice from './../../slice/memberSlice';
 import { setMemberInfo } from '../../slice/memberSlice';
-import { Typography } from '@mui/material';
+import { Button, Typography } from "@mui/material";
 import GenreSelectComponent from './GenreSelectComponent';
 import useCustomLogin from '../../hooks/useCustomLogin';
+import ResultModalComponent from '../../common/ResultModalComponent';
 
 const host = API_SERVER_HOST
 
@@ -26,12 +27,13 @@ function ModifyComponent({props}) {
     const [changeImage, setChangeImage] = useState(false)
     const [selectedGenre, setSelectedGenre] = useState([]);
     const { isLogin, moveToLoginReturn } = useCustomLogin(); 
-
+    const [resultModal, setResultModal] = useState(false)
+    const [openToggle, setOpenToggle] = useState(false)
     const uploadRef = useRef()
 
     useEffect(()=>{
         setMember({...memberInfo})
-        setImgFile(`${host}/api/member/view/s_${memberInfo.uploadFileName}`)
+        setImgFile(`${host}/api/member/view/${memberInfo.uploadFileName}`)
 
     },[loginInfo, memberInfo])
 
@@ -44,16 +46,15 @@ function ModifyComponent({props}) {
         setMember({...member})
     }
 
-    const handleClickModify = () => {
+  
+    const handleClickModify = () => { 
         const file = uploadRef.current.files[0]
         const formData = new FormData()
 
         if(file !== undefined ){
-            console.log("file: "+file)
             formData.append("file", file)   
         }
-        console.log("selectedGenre:"+selectedGenre)
-        console.log("member.uploadFileName:"+member.uploadFileName)
+
         formData.append("uploadFileName", member.uploadFileName)
         formData.append("username", member.username)
         formData.append("nickname", member.nickname)
@@ -61,7 +62,8 @@ function ModifyComponent({props}) {
         formData.append("genreNames", selectedGenre)
 
         putMember(loginInfo.id, formData).then(data => {
-            alert("수정완료") //임시
+            setResultModal(true)
+            setOpenToggle(!openToggle)
             dispatch(setMemberInfo(data))
         })
     }
@@ -88,41 +90,39 @@ function ModifyComponent({props}) {
     };
     return (
         <div className="flex flex-col items-center">
-            회원수정
-            <div>
-            <img src={imgFile ? imgFile :  profileIcon} alt="프로필 이미지" className='size-40 rounded-full object-cover'/>
-            <button onClick={handleClickImageDelete}>프로필 사진 삭제</button>
+            {resultModal ? <ResultModalComponent openToggle={openToggle}/> : <></>}
+        <Typography variant="h6" sx={{mt:6, mb:4}}>내 정보 수정</Typography>
+            <div className="flex flex-col items-center">
                 <label htmlFor="uploadFileName" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">프로필 사진</label>
-                <input ref={uploadRef} onChange={handleChangeImage} accept="image/*" type={'file'} id="uploadFileName" name="uploadFileName" 
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
-                 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600
-                  dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  />
+                <img src={imgFile ? imgFile :  profileIcon} alt="프로필 이미지" className='size-40 rounded-full object-cover'/>
+                    <div className='mt-5 mb-5'>
+                        <Button variant='outlined' color='secondary' sx={{mr:1}} onClick={() => uploadRef.current.click()}>사진 변경</Button>
+                        <Button variant='outlined' color='secondary'  onClick={handleClickImageDelete}>사진 삭제</Button>
+                        <input ref={uploadRef} onChange={handleChangeImage} accept="image/*" type={'file'} id="uploadFileName" name="uploadFileName" style={{ display: 'none' }} />
+                    </div>
             </div>
             <div>
                 <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">이메일</label>
-                <input type="text" id="username" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
-                 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600
-                  dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                <input type="text" id="username" className="mb-5 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg
+                focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600"
                   value={member.username} readOnly />
-            </div>
+            </div>           
             <div>
                 <label htmlFor="nickname" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">닉네임</label>
-                <input type="text" id="nickname" name="nickname" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
-                 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600
-                  dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  value={member.nickname} onChange={handleChangeMember}/>
+                <input type="text" id="nickname" name="nickname" className="mb-5 border border-gray-300 text-gray-900 text-sm rounded-lg
+                focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600"
+                value={member.nickname} onChange={handleChangeMember}/>
             </div>
-            <div>
-                <Typography variant='body1'>선호 장르 선택</Typography>
-                <GenreSelectComponent selectedGenre={selectedGenre} onSelectedGenre={handleSelectedGenre} genreNames={member.genreNames}/>
+            <div className='mb-5'>
+                <label htmlFor="genre" className="ml-2 block text-sm font-medium text-gray-900 dark:text-white">선호 장르 [3개 선택 가능]</label>
+                <GenreSelectComponent name="genre" selectedGenre={selectedGenre} onSelectedGenre={handleSelectedGenre} genreNames={member.genreNames}/>
             </div>
+   
             <div>
-                <button type="button"
-                    className="rounded p-4 m-2 text-xl w-32 text-white bg-blue-500"
+                <Button variant='contained' color="primary" size="large"
                     onClick={handleClickModify}>
                     회원 정보 수정
-                </button>
+                </Button>
             </div>
         </div>
     );

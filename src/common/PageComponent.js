@@ -3,7 +3,7 @@ import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import IconButton from '@mui/material/IconButton';
 
-function PageComponent({serverData, movePage, updateDay, platform}) {
+function PageComponent({serverData, movePage, updateDay, platform, keyword}) {
 
     return (
       <div className="m-6 flex justify-center cursor-pointer" >
@@ -19,7 +19,7 @@ function PageComponent({serverData, movePage, updateDay, platform}) {
           <IconButton
             key={pageNum}
             className="m-2 p-2 size-10"
-            onClick={() => movePage({ page: pageNum, updateDay: updateDay, platform : platform }) }
+            onClick={() => movePage({ page: pageNum, updateDay: updateDay, platform : platform, keyword:keyword }) }
             color={`${serverData.current === pageNum ? 'primary' : 'dark'}`}
             size="small"
             sx={{ m: 1 }}

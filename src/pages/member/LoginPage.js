@@ -7,7 +7,7 @@ function LoginPage(props) {
     
     return (
         <BasicLayout>
-            <Container pixed="true">
+            <Container pixed="true" sx={{mt:10}}>
                 <LoginComponent />
             </Container>
         </BasicLayout>

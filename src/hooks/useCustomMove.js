@@ -27,6 +27,7 @@ const useCustomMove = () => {
     const genre = getNum(queryParams.get('genre'),'ROMANTIC')
     const fin = getValue(queryParams.get('fin'), false)
     const platform = getValue(queryParams.get('platform'), 'naver')
+    const keyword = getValue(queryParams.get('keyword'), '')
 
     const queryDefault = createSearchParams({page,size}).toString()
 
@@ -90,14 +91,35 @@ const useCustomMove = () => {
         const pageNum = getNum(page, 1)
         queryStr = createSearchParams({genre:genre, page:pageNum}).toString()
         navigate({
-            pathname: `../webtoon/${num}`,
+            pathname: `/webtoon/${num}`,
             search: queryStr
         })
     }
 
+    const moveToSearch = (pageParam) => {
+
+        if(pageParam){
+            const keywordSt = getValue(pageParam.keyword, '')
+
+            queryStr = createSearchParams({keyword:keywordSt}).toString()
+        }
+        navigate({pathname:`/search`, search:queryStr})
+    }
+    
+    const moveToSearchWebtoon = (pageParam) => {
+
+        if(pageParam){
+            const pageNum = getNum(pageParam.page, 1)
+            const keywordSt = getValue(pageParam.keyword, '')
+
+            queryStr = createSearchParams({keyword:keywordSt, page:pageNum}).toString()
+        }
+        navigate({pathname:`/search/webtoon`, search:queryStr})
+    }
 
 
-    return {moveTodayList, moveGenreList, movePlatformList, moveToDetail, page, size, updateDay, genre, refresh, platform};
+
+    return {moveTodayList, moveGenreList, movePlatformList, moveToDetail,moveToSearch,moveToSearchWebtoon, page, size, updateDay, genre, refresh, platform, keyword};
 }
 
 export default useCustomMove;

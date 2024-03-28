@@ -34,16 +34,14 @@ function LoginComponent() {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <Avatar sx={{ mb:2, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography variant="h6">
-            로그인
+            SNS 로그인
           </Typography>
-          <Typography variant="body1" sx={{ mt: 4}}>
-            SNS 계정으로 로그인
-          </Typography>
-          <Box sx = {{ display:'flex', justifyContent: 'center', mt:4}}>
+
+          <Box sx = {{ display:'flex', justifyContent: 'center', m:2}}>
             <img src={google} alt="google" style={{ width: "50px", margin:10}} value="google"onClick={onGoogleLogin}/>
             <img src={naver} alt="naver" style={{ width: "50px" , margin:10}} value="naver" onClick={onNaverLogin}/>
             <img src={kakao} alt="kakao" style={{ width: "50px" ,margin:10}} value="kakao" onClick={onKakaoLogin}/>

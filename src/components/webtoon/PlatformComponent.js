@@ -46,7 +46,6 @@ function PlatformComponent(props) {
     },[platform, genre])
 
     useEffect(()=>{
-        console.log("page:"+page)
         getList({page,size,platform,genre,fin,value}).then(data =>{
             window.scrollTo(0,0)
             setServerData(data)

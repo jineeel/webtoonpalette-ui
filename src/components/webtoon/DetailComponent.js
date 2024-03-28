@@ -102,6 +102,7 @@ function DetailComponent({id, genre}) {
                 deleteFavorite(favorite).then(data=>{
                     setFavorite(0)
                     setFavoriteColor("secondary")
+                   
                 })
 
             }else{ 
@@ -112,6 +113,7 @@ function DetailComponent({id, genre}) {
                 })
     
             }
+    
         }  
     }
 
@@ -148,7 +150,9 @@ function DetailComponent({id, genre}) {
                         </div>
                         <div className='absolute bottom-1'>
                             <Button variant="contained" size='large' sx={{width:200, height:60, boxShadow: 'none',}} onClick={postUrl}><Typography variant='h6' color='white'>웹툰 보러가기</Typography></Button>
-                            <Button variant='outlined' sx={{width:60, height:60, ml:1}} color={favoriteColor} onClick={handleClickFavorite}  data-modal-target="default-modal" data-modal-toggle="default-modal" ><FavoriteIcon color={favoriteColor} /></Button> {/** 하트 누르면 색 빨간색으로 */}
+                            <Button variant='outlined' sx={{width:60, height:60, ml:1}} color={favoriteColor} onClick={handleClickFavorite}  data-modal-target="default-modal" data-modal-toggle="default-modal" >
+                                <FavoriteIcon color={favoriteColor} />
+                            </Button>
                             <Button variant="outlined" sx={{width:60, height:60, ml:1}} color='secondary'><CreateNewFolderIcon color='secondary'/></Button>
                         </div>
                     </div>

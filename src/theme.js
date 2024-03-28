@@ -5,7 +5,8 @@ const theme = createTheme({
     primary: {
       main: '#8fb5e3',
       light: '#d1e2f7',
-      dark: '#8fb5e3'
+      dark: '#8fb5e3',
+      contrastText: "#ffffff"
     },
     secondary: {
       main: '#a37ae0',
@@ -18,12 +19,19 @@ const theme = createTheme({
       dark: '#282828',
     },
     red: {
-      main: "#BF4D87",
-      light: "#C487A6",
-      dark: "#BF4D87",
+      main: "#fe8a8b",
+      light: "#fdc1c2",
+      dark: "#d86061",
     },
 
   },
+  // overrides: {
+  //   MuiButton: {
+  //     primary: {
+  //       color: 'white',
+  //     },
+  //   },
+  // },
   typography: {
     fontFamily: "'Noto Sans KR', sans-serif"
   } 

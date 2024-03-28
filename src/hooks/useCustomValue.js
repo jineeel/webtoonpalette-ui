@@ -28,6 +28,7 @@ const useCustomValue = () => {
         setGenre(value)
     }
 
+
     return {fin, genre, checkFinished, selectGenre, selectList};
 }
 
