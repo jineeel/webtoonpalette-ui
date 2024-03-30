@@ -21,13 +21,12 @@ const value = 'genre'
 
 function GenreComponent(props) {
     const tabValue = localStorage.getItem("tabValue") ? localStorage.getItem("tabValue") : "ROMANCE";
-    const memberInfo = useSelector(state => state.memberSlice)
-
     const {page, size, moveGenreList, refresh} = useCustomMove()
     const [serverData, setServerData] = useState(initState);
     const [genre, setGenre] = useState(tabValue);
-
     const { fin, checkFinished }= useCustomValue()
+    const memberInfo = useSelector(state => state.memberSlice)
+    const [favorite, setFavorite] = useState(false);
 
     const handleChange = (event, newValue) => {
         setGenre(newValue);
@@ -42,15 +41,22 @@ function GenreComponent(props) {
         localStorage.setItem('tabValue',genre);
         moveGenreList({ page: page, genre: genre});
     },[genre])
-     
-    useEffect(()=>{
-        getList({page,size,genre,fin,value}).then(data =>{
-            window.scrollTo(0,0)
-            setServerData(data)
-            
-        })
-    }, [page,size,genre,refresh,fin]);
 
+    //페이지가 변경되면 스크롤을 올린다.
+    useEffect(()=>{
+        window.scrollTo(0,0)
+    },[page])
+
+    useEffect(()=>{
+        const memberId = memberInfo.id
+        getList({page,size,genre,fin,value,memberId}).then(data =>{
+            setServerData(data)
+        })
+    }, [page,size,genre,refresh,fin,favorite]);
+
+    const changeFavoriteState = () =>{
+        setFavorite(!favorite)
+    }
 
     return (
         <div>
@@ -73,7 +79,7 @@ function GenreComponent(props) {
                         label={<Typography variant="button" color="dark">완결</Typography>}
                         control={<Checkbox checked={fin} onChange={checkFinished} size="small" color='secondary' />}
                     />
-                    <WebtoonListComponent serverData={serverData}/>
+                    <WebtoonListComponent serverData={serverData} changeFavoriteState={changeFavoriteState}/>
                 </TabPanel>
             </TabContext>
             <PageComponent serverData={serverData} movePage={moveGenreList} value={genre} />

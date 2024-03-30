@@ -7,6 +7,7 @@ import Checkbox from '@mui/material/Checkbox';
 import useCustomValue from '../../hooks/useCustomValue';
 import { getList } from '../../api/webtoonApi';
 import { Container } from '@mui/system';
+import { useSelector } from 'react-redux';
 
 
 const initState = {
@@ -19,22 +20,34 @@ const value = 'rank'
 function RankComponent(props) {
     const [serverData, setServerData] = useState(initState);
     const { fin, genre, checkFinished, selectGenre, selectList }= useCustomValue()
+    const memberInfo = useSelector(state => state.memberSlice)
+    const [favorite, setFavorite] = useState(false);
 
     const handleSelectGenre = (e) => {
         selectGenre(e.target.value)
-      };
-      
+    };
+
     useEffect(() => {
         localStorage.setItem('isChecked', JSON.stringify(fin));
       }, [fin]);
     
-    useEffect(()=>{
-        getList({genre,fin,value}).then(data =>{
+
+    useEffect(() => {
+        localStorage.setItem('genreSelected', genre);
+    },[genre])
+    
+
+    useEffect(() => {
+        const memberId = memberInfo.id
+
+        getList({genre,fin,value,memberId}).then(data =>{
             setServerData(data)
         })
-    }, [genre,fin]);
+    }, [genre,fin,favorite]);
 
- 
+    const changeFavoriteState = () =>{
+        setFavorite(!favorite)
+    }
     return (
         <div>
             <div className='mt-3 mb-7'><Typography color="dark.light" sx={{textAlign:'center', fontWeight: 'medium', fontSize: 22}}>인기 웹툰 TOP 60</Typography></div>
@@ -53,7 +66,7 @@ function RankComponent(props) {
                             })}
                     </select>  
                 </div>
-                <WebtoonListComponent serverData={serverData} rank="true"/>
+                <WebtoonListComponent serverData={serverData} rank="true" changeFavoriteState={changeFavoriteState}/>
             </Container>
             
             

@@ -6,16 +6,15 @@ import adult from '../images/adult_icon.png';
 import rest from '../images/rest.png';
 import finished from '../images/finished.png';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import { convertGenre, convertFanCount } from './convertValue';
+import { convertGenre, convertFanCount, truncate } from './convertValue';
 
 function WebtoonCardComponent({webtoon}) {
 
-  
   const {moveToDetail} = useCustomMove()
-  
+
     return (
-      <div key={webtoon.id} onClick={()=> moveToDetail(webtoon.id, webtoon.genre)} className='ml-1 mr-1 mb-10 relative rounded-md shadow-xl'> 
-        <div className="flex relative z-0 rounded-lg">
+      <div key={webtoon.id} onClick={()=> moveToDetail(webtoon.id, webtoon.genre)} className='ml-1 mr-1 mb-10 relative rounded-md shadow-xl border border-gray-200'> 
+        <div className="flex relative z-0 rounded-lg ">
           <img    
             srcSet={`${webtoon.img}`}
             src={`${webtoon.img}`}
@@ -34,16 +33,16 @@ function WebtoonCardComponent({webtoon}) {
         </div>
       
           <div className='mb-1 w-full relative rounded-b-lg bg-white -mt-6 p-1'>
-            <div className='flex my-1 h-16'>
+            <div className='flex my-1 h-14'>
               {webtoon.platform == 'naver' ? <img src={naver} alt="naver" className='size-5 mt-1 mr-1'/> : <img src={kakao} alt="kakao" className='size-5 mt-1 mr-1'/>}
-              <span className='font-semibold'>{webtoon.title}</span>
+              <span className='font-semibold'>{truncate(webtoon.title,22)}</span>
             </div>
-            <div className='text-xs text-black mb-1 h-8'>
+            <div className='text-xs text-black mb-1 h-5'>
                 <span className="mr-1">{convertGenre(webtoon.genre)} ·</span>
-                <span>{webtoon.author}</span>
+                <span>{truncate(webtoon.author,9)}</span>
             </div>
             <div className='text-xs'>
-              {webtoon.fanCount != 0 ? <span className='mr-1'><VisibilityIcon fontSize="small" color="disabled" sx={{mr:0.5}}/>{convertFanCount(webtoon.fanCount)}</span> : <></>}
+            <span className='mr-1'><VisibilityIcon fontSize="small" color="disabled" sx={{mr:0.5}}/> {webtoon.fanCount != 0 ? convertFanCount(webtoon.fanCount) : '-'}</span>
             </div>
           </div>
       </div>

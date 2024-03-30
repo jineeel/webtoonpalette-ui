@@ -5,11 +5,7 @@ import ModifyComponent from '../../components/member/ModifyComponent';
 
 function ModifyPage(props) {
     return (
-        <BasicLayout>
-            <Container fixed>
-                <ModifyComponent />
-            </Container>
-        </BasicLayout>
+        <ModifyComponent />
     );
 }
 

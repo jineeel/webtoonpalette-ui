@@ -117,9 +117,19 @@ const useCustomMove = () => {
         navigate({pathname:`/search/webtoon`, search:queryStr})
     }
 
+    const moveToFavorite = (pageParam) => {
+        if(pageParam){
+            const pageNum = getNum(pageParam.page, 1)
+            const genreSt = getValue(pageParam.genre, 'ALL')
+
+            queryStr = createSearchParams({page:pageNum, genre:genreSt}).toString()
+        }
+        navigate({pathname:`../favorite`, search:queryStr})
+    }
 
 
-    return {moveTodayList, moveGenreList, movePlatformList, moveToDetail,moveToSearch,moveToSearchWebtoon, page, size, updateDay, genre, refresh, platform, keyword};
+
+    return {moveTodayList, moveGenreList, movePlatformList, moveToDetail,moveToSearch,moveToSearchWebtoon,moveToFavorite, page, size, updateDay, genre, refresh, platform, keyword};
 }
 
 export default useCustomMove;

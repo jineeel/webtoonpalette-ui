@@ -72,14 +72,14 @@ function MyPageComponent(props) {
                     내 정보
                 </ListItemButton>
 
-                <ListItemButton sx={{ borderBottom: 1, borderColor:'grey.100'}} component={Link} to="/">
+                <ListItemButton sx={{ borderBottom: 1, borderColor:'grey.100'}} component={Link} to="/member/palette">
                     <ListItemIcon>
                         <PaletteIcon />
                     </ListItemIcon>
                     나의 팔레트
                 </ListItemButton>
 
-                <ListItemButton sx={{ borderBottom: 1, borderColor:'grey.100'}} component={Link} to="/">
+                <ListItemButton sx={{ borderBottom: 1, borderColor:'grey.100'}} component={Link} to="/member/favorite">
                     <ListItemIcon>
                         <FavoriteIcon />
                     </ListItemIcon>

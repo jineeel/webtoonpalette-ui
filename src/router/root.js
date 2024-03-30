@@ -6,10 +6,9 @@ import searchRouter from './searchRouter';
 
 const { createBrowserRouter } = require("react-router-dom");
 
-const Main = lazy(()=>import("../pages/webtoon/MainPage"))
-const Mypage = lazy(() => import("../pages/member/MyPage"))
 const SearchIndex = lazy(()=>import("../pages/search/IndexPage"))
 const WebtoonIndex = lazy(()=>import("../pages/webtoon/IndexPage"))
+const MemberIndex = lazy(()=>import("../pages/member/IndexPage"))
 
 const root = createBrowserRouter([
     {
@@ -19,11 +18,8 @@ const root = createBrowserRouter([
     },
     {
         path: 'member',
+        element: <Suspense><MemberIndex /></Suspense>,
         children: memberRouter()
-    },
-    {
-        path: 'mypage',
-        element: <Suspense><Mypage /></Suspense>
     },
     {
         path: 'search',

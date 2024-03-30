@@ -6,11 +6,9 @@ import LoginComponent from '../../components/member/LoginComponent';
 function LoginPage(props) {
     
     return (
-        <BasicLayout>
-            <Container pixed="true" sx={{mt:10}}>
-                <LoginComponent />
-            </Container>
-        </BasicLayout>
+        <div className='mt-20'>
+            <LoginComponent />
+        </div>
     );
 }
 

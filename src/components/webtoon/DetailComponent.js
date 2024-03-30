@@ -15,6 +15,7 @@ import { postFavorite, getFavorite, deleteFavorite } from '../../api/favoriteApi
 import { useSelector } from 'react-redux';
 import useCustomLogin from '../../hooks/useCustomLogin'
 import LoginModalComponent from '../../common/LoginModalComponent';
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 
 const initData = {
     id : 0,
@@ -122,7 +123,7 @@ function DetailComponent({id, genre}) {
             {modalLogin? <LoginModalComponent openToggle={openToggle} /> : <></> }
             <Container fixed>
             <div className='flex flex-row left-0 mt-6 mb-16 ml-2 relative'>
-                <div className='relative'>
+                <div className='relative border border-gray-100 rounded-lg'>
                     <img    
                     src={`${webtoon.img}`}
                     alt={webtoon.title}
@@ -151,7 +152,7 @@ function DetailComponent({id, genre}) {
                         <div className='absolute bottom-1'>
                             <Button variant="contained" size='large' sx={{width:200, height:60, boxShadow: 'none',}} onClick={postUrl}><Typography variant='h6' color='white'>웹툰 보러가기</Typography></Button>
                             <Button variant='outlined' sx={{width:60, height:60, ml:1}} color={favoriteColor} onClick={handleClickFavorite}  data-modal-target="default-modal" data-modal-toggle="default-modal" >
-                                <FavoriteIcon color={favoriteColor} />
+                               {favorite? <FavoriteIcon color={favoriteColor} /> :  <FavoriteBorderOutlinedIcon />}
                             </Button>
                             <Button variant="outlined" sx={{width:60, height:60, ml:1}} color='secondary'><CreateNewFolderIcon color='secondary'/></Button>
                         </div>

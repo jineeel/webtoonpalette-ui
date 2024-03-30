@@ -19,17 +19,32 @@ const useCustomValue = () => {
         const storedValue = localStorage.getItem('isChecked');
         return storedValue !== null ? JSON.parse(storedValue) : false;
     });
-    const [genre, setGenre] = useState('ALL');
+    const tabValue = localStorage.getItem("tabValue");
+
+    const genreSelected = localStorage.getItem("genreSelected") ? localStorage.getItem("genreSelected") : "ALL" ;
+    const [genre, setGenre] = useState(genreSelected);
+    const [favorite, setFavorite] = useState(false);
+
+    // useEffect(()=>{
+    //     setGenre("ALL")
+    // },[tabValue])
+
 
     const checkFinished = (value) => {
         setFin(fin => !fin);
     }
+
     const selectGenre = (value) => {
         setGenre(value)
     }
 
+    const changeFavorite = () => {
+        console.log("changeFavorite"+favorite)
+        setFavorite(!favorite)
+    }
 
-    return {fin, genre, checkFinished, selectGenre, selectList};
+
+    return {fin, genre, checkFinished, selectGenre, changeFavorite, selectList, favorite};
 }
 
 export default useCustomValue;

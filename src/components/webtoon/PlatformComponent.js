@@ -11,6 +11,7 @@ import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Typography from '@mui/material/Typography';
 import useCustomValue from '../../hooks/useCustomValue';
+import { useSelector } from 'react-redux';
 
 const initState = {
     dtoList:[], pageNumList:[], pageRequestDTO: null, prev: false, next: false,
@@ -20,12 +21,15 @@ const value = 'platform'
 
 function PlatformComponent(props) {
     const tabValue = localStorage.getItem("tabValue") ? localStorage.getItem("tabValue") : 'naver';
-    
+    // const genreSelected = localStorage.getItem("genreSelected") ? localStorage.getItem("genreSelected") : "ALL" ;
+
     const {page, size, movePlatformList, refresh} = useCustomMove()
     const [serverData, setServerData] = useState(initState);
     const [platform, setPlatform] = useState(tabValue);
     const { fin, genre, checkFinished, selectGenre, selectList }= useCustomValue()
-
+    const memberInfo = useSelector(state => state.memberSlice)
+    const [favorite, setFavorite] = useState(false);
+    
     const handleChange = (event, newValue) => {
         setPlatform(newValue);
         movePlatformList({ platform: newValue, genre:genre });
@@ -34,25 +38,37 @@ function PlatformComponent(props) {
     const handleSelectGenre = (e) => {
         selectGenre(e.target.value)
     };
-      
+
     useEffect(() => {
         localStorage.setItem('isChecked', JSON.stringify(fin));
     }, [fin]);
+
+    useEffect(() => {
+        movePlatformList({ genre: genre, platform:platform});
+        localStorage.setItem('genreSelected', genre);
+    },[genre])
     
     useEffect(()=>{
-        
         movePlatformList({ page: page, genre: genre, platform:platform});
         localStorage.setItem('tabValue',platform);
-    },[platform, genre])
+    },[platform])
+    
+    useEffect(()=>{
+        window.scrollTo(0,0)
+    },[page])
 
     useEffect(()=>{
-        getList({page,size,platform,genre,fin,value}).then(data =>{
-            window.scrollTo(0,0)
+        const memberId = memberInfo.id
+        
+        getList({page,size,platform,genre,fin,value,memberId}).then(data =>{
+           
             setServerData(data)
         })
-    }, [page,size,platform,refresh,genre,fin]);
+    }, [page,size,platform,refresh,genre,fin,favorite]);
 
-    
+    const changeFavoriteState = () =>{
+        setFavorite(!favorite)
+    }
     return (
         <div>
 
@@ -77,7 +93,7 @@ function PlatformComponent(props) {
                             })}
                     </select>  
                 </div>
-                    <WebtoonListComponent serverData={serverData}/>
+                    <WebtoonListComponent serverData={serverData} changeFavoriteState={changeFavoriteState}/>
                 </TabPanel>
             </TabContext>
             <PageComponent serverData={serverData} movePage={movePlatformList} value={genre} platform={platform} />

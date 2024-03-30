@@ -25,6 +25,7 @@ const useCustomLogin = () => {
     }
     
     const moveToLoginReturn = () => {
+        console.log("return=====")
         return <Navigate replace to ="/member/login/" />
     } 
 

@@ -23,4 +23,8 @@ export const deleteFavorite = async (id) => {
     return res.data
 }
 
+export const getFavoriteWebtoon = async ({memberId, page, size, genre}) => {
+    const res = await jwtAxios.get(`${prefix}/${memberId}`,{params:{page:page, size:size, genre: genre}})
+    return res.data
+}
 

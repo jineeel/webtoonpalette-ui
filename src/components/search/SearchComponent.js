@@ -5,9 +5,10 @@ import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import useCustomMove from '../../hooks/useCustomMove';
 
-export default function Search(props) {
+export default function SearchComponent(props) {
   const [keyword, setKeyword]= useState()
   const { moveToSearch } = useCustomMove();
+
 
   const changeKeyword = (e) => {
       setKeyword(e.target.value)
@@ -27,7 +28,7 @@ export default function Search(props) {
   return (
     <Paper
       component="form"
-      sx={{ pl: 1, pr:0.5, display: 'flex', alignItems: 'center', width:'250', height:35, mr:2, mt:1, boxShadow:'rgba(0, 0, 0, 0.2) 0px 1px 5px 0px' , borderRadius:3} }
+      sx={{ pl: 1, pr:0.5, display: 'flex', alignItems: 'center', width:'250', height:35, mr:2, mt:1, boxShadow:'rgba(0, 0, 0, 0.15) 0px 1px 5px 0px' , borderRadius:3} }
     >
       <InputBase
         sx={{ ml: 1, flex: 1, fontSize:13}}

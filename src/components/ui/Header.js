@@ -28,7 +28,9 @@ function Header(props) {
 
   const handleClickMenu = () => {
     localStorage.removeItem('tabValue')
+    localStorage.removeItem('genreSelected')
   }
+
   return (
     <Container pixed="true">
       <Toolbar
@@ -49,11 +51,11 @@ function Header(props) {
 
         <div className='flex'>
           <SearchComponent />
-          <IconButton sx={{ mr: 1}} component={Link} to="/list"><PaletteIcon fontSize="small" /></IconButton>
-          <IconButton sx={{ mr: 1 }} component={Link} to="/favorite"><FavoriteIcon fontSize="small" /></IconButton>
+          <IconButton sx={{ mr: 1}} component={Link} to="/member/palette"><PaletteIcon fontSize="small" /></IconButton>
+          <IconButton sx={{ mr: 1 }} onClick={handleClickMenu} component={Link} to="/member/favorite"><FavoriteIcon fontSize="small" /></IconButton>
 
           {loginState.providerId ?
-            <Link to={'/mypage'}><img src={ imgFile ? imgFile :  profileIcon} alt="" className='size-12 rounded-full object-cover'/></Link>
+            <Link to={'/member/mypage'}><img src={ imgFile ? imgFile :  profileIcon} alt="" className='size-12 rounded-full object-cover'/></Link>
           : 
             <IconButton sx={{ mr: 1 }} component={Link} to="/member/login"><AccountCircleIcon fontSize="large" /></IconButton> }
         </div>
@@ -61,13 +63,13 @@ function Header(props) {
 
       <nav id='navbar' className="flex">
           <div className="w-4/5" >
-              <ul className="flex p-4 text-gray-700 font-medium">
-                <li className="px-4"> <Link to={'/'}>추천 웹툰</Link> </li>
-                <li className="px-4" onClick={handleClickMenu}> <Link to={'/today'}>오늘의 웹툰</Link> </li>
-                <li className="px-4" onClick={handleClickMenu}> <Link to={'/genre'}>장르</Link> </li>
-                <li className="px-4" onClick={handleClickMenu}> <Link to={'/rank'}>랭킹</Link> </li>
-                <li className="px-4" onClick={handleClickMenu}> <Link to={'/platform'}>플랫폼</Link> </li>
-                <li className="px-4"> <Link to={'/platform'}>추천 팔레트</Link> </li>
+              <ul className="flex p-4 text-neutral-600 font-medium" onClick={handleClickMenu}>
+                <li className="px-4 hover:text-neutral-900"> <Link to={'/'}>추천 웹툰</Link> </li>
+                <li className="px-4 hover:text-neutral-900"> <Link to={'/today'}>오늘의 웹툰</Link> </li>
+                <li className="px-4 hover:text-neutral-900"> <Link to={'/genre'}>장르</Link> </li>
+                <li className="px-4 hover:text-neutral-900"> <Link to={'/rank'}>랭킹</Link> </li>
+                <li className="px-4 hover:text-neutral-900"> <Link to={'/platform'}>플랫폼</Link> </li>
+                <li className="px-4 hover:text-neutral-900"> <Link to={'/platform'}>추천 팔레트</Link> </li>
               </ul>
           </div>
       </nav>

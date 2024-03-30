@@ -6,13 +6,7 @@ import { Container } from '@mui/material';
 function MyPage(props) {
 
     return (
-        <div>
-            <BasicLayout>
-                <Container pixed="true">
-                    <MyPageComponent />
-                </Container>
-            </BasicLayout>
-        </div>
+        <MyPageComponent />
     );
 }
 

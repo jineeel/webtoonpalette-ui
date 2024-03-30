@@ -4,9 +4,7 @@ import { Container } from '@mui/material';
 
 function WebtoonPage(props) {
     return (
-        <Container fixed>
-            <WebtoonComponent /> 
-        </Container>
+        <WebtoonComponent /> 
     );
 }
 

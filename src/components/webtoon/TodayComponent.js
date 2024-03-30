@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getList } from '../../api/webtoonApi';
+import { getList, getListLogin } from '../../api/webtoonApi';
 import useCustomMove from '../../hooks/useCustomMove';
 import WebtoonListComponent from '../../common/WebtoonListComponent';
 import Tab from '@mui/material/Tab';
@@ -8,7 +8,8 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import PageComponent from '../../common/PageComponent';
 import { todayOfWeek } from '../../common/convertValue';
-
+import useCustomLogin from '../../hooks/useCustomLogin';
+import { useSelector } from 'react-redux';
 
 const initState = {
     dtoList:[], pageNumList:[], pageRequestDTO: null, prev: false, next: false,
@@ -22,6 +23,8 @@ function TodayComponent(props) {
     const {page, size, moveTodayList, refresh} = useCustomMove()
     const [serverData, setServerData] = useState(initState);
     const [updateDay, setUpdateDay] = useState(tabValue);
+    const memberInfo = useSelector(state => state.memberSlice)
+    const [favorite, setFavorite] = useState(false);
     const fin = true;
   
     useEffect(() => {
@@ -37,14 +40,26 @@ function TodayComponent(props) {
     useEffect(()=>{
         moveTodayList({ page:page, updateDay: updateDay });
     },[])
-     
+    
+    //페이지가 변경되면 스크롤을 올린다.
     useEffect(()=>{
-        getList({page,size,updateDay,value,fin}).then(data =>{
-            window.scrollTo(0,0)
+        window.scrollTo(0,0)
+    },[page])
+
+    useEffect(()=>{
+
+        const memberId = memberInfo.id
+
+        getList({page,size,updateDay,value,fin, memberId}).then(data =>{
+
             setServerData(data)
         })
-    }, [page,size,updateDay,refresh]);
+        
+    }, [page,size,updateDay,refresh,favorite]);
 
+    const changeFavoriteState = () =>{
+        setFavorite(!favorite)
+    }
     return (
       <div> 
             <TabContext value={updateDay}>
@@ -61,7 +76,7 @@ function TodayComponent(props) {
                 </TabList>
                 
                 <TabPanel value={updateDay}>
-                    <WebtoonListComponent serverData={serverData}/>
+                    <WebtoonListComponent serverData={serverData} changeFavoriteState={changeFavoriteState}/>
                 </TabPanel>
             </TabContext>
             <PageComponent serverData={serverData} movePage={moveTodayList} updateDay={updateDay} />

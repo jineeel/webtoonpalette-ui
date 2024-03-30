@@ -3,9 +3,8 @@ import { getSearch } from '../../api/webtoonApi';
 import useCustomMove from '../../hooks/useCustomMove';
 import WebtoonListComponent from '../../common/WebtoonListComponent';
 import { Typography } from "@mui/material";
-
 import PageComponent from '../../common/PageComponent';
-
+import { useSelector } from 'react-redux';
 
 const initState = {
     dtoList:[], pageNumList:[], pageRequestDTO: null, prev: false, next: false,
@@ -14,15 +13,29 @@ const initState = {
 function WebtoonComponent(props) {
     
     const [serverData, setServerData] = useState(initState)
-    const {keyword, page,  moveToSearchWebtoon} = useCustomMove()
+    const {keyword, page, moveToSearchWebtoon} = useCustomMove()
+    const [favorite, setFavorite] = useState(false);
+    const memberInfo = useSelector(state => state.memberSlice)
 
+    const fin = true;
     useEffect(()=>{
+        window.scrollTo(0,0)
+    },[page])
+    useEffect(()=>{
+        const memberId = memberInfo.id
+
         moveToSearchWebtoon({keyword, page})
-         getSearch({keyword, page}).then(data => {
-             setServerData(data)
-             window.scrollTo(0,0)
+
+        getSearch({keyword, page, fin, memberId}).then(data => {
+            
+            setServerData(data)
+
          })
-    },[keyword,page])
+    },[keyword,page,favorite])
+
+    const changeFavoriteState = () =>{
+        setFavorite(!favorite)
+    }
 
     return (
        <div>
@@ -32,7 +45,7 @@ function WebtoonComponent(props) {
             </div>
             <div className='mb-10'>
                 <Typography variant='h6' sx={{mt:2, mb:1, fontSize:18}}>웹툰</Typography>
-                <WebtoonListComponent serverData={serverData}/>
+                <WebtoonListComponent serverData={serverData} changeFavoriteState={changeFavoriteState}/>
             </div>
             <PageComponent serverData={serverData} movePage={moveToSearchWebtoon} keyword={keyword}/>
         </div>

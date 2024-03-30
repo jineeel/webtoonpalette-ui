@@ -33,10 +33,6 @@ function RedirectPage(props) {
         }
     }, [id])
 
-    // useEffect(()=>{
-       
-    // },[memberInfo])
-    
     return (
         <div></div>
     );

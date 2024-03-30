@@ -4,9 +4,7 @@ import MainComponent from '../../components/search/MainComponent';
 
 function MainPage(props) {
     return (
-        <Container fixed>
-            <MainComponent /> 
-        </Container>
+        <MainComponent /> 
     );
 }
 
