@@ -12,6 +12,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Typography from '@mui/material/Typography';
 import useCustomValue from '../../hooks/useCustomValue';
 import { useSelector } from 'react-redux';
+import useDidMountEffect from '../../hooks/useDidMountEffect';
 
 const initState = {
     dtoList:[], pageNumList:[], pageRequestDTO: null, prev: false, next: false,
@@ -23,7 +24,7 @@ function PlatformComponent(props) {
     const tabValue = localStorage.getItem("tabValue") ? localStorage.getItem("tabValue") : 'naver';
     // const genreSelected = localStorage.getItem("genreSelected") ? localStorage.getItem("genreSelected") : "ALL" ;
 
-    const {page, size, movePlatformList, refresh} = useCustomMove()
+    const {page, size, movePlatformList} = useCustomMove()
     const [serverData, setServerData] = useState(initState);
     const [platform, setPlatform] = useState(tabValue);
     const { fin, genre, checkFinished, selectGenre, selectList }= useCustomValue()
@@ -39,16 +40,16 @@ function PlatformComponent(props) {
         selectGenre(e.target.value)
     };
 
-    useEffect(() => {
+    useDidMountEffect(() => {
         localStorage.setItem('isChecked', JSON.stringify(fin));
     }, [fin]);
 
-    useEffect(() => {
+    useDidMountEffect(() => {
         movePlatformList({ genre: genre, platform:platform});
         localStorage.setItem('genreSelected', genre);
     },[genre])
     
-    useEffect(()=>{
+    useDidMountEffect(()=>{
         movePlatformList({ page: page, genre: genre, platform:platform});
         localStorage.setItem('tabValue',platform);
     },[platform])
@@ -64,7 +65,7 @@ function PlatformComponent(props) {
            
             setServerData(data)
         })
-    }, [page,size,platform,refresh,genre,fin,favorite]);
+    }, [page,platform,genre,fin,favorite]);
 
     const changeFavoriteState = () =>{
         setFavorite(!favorite)
@@ -86,7 +87,7 @@ function PlatformComponent(props) {
                         control={<Checkbox checked={fin} onChange={checkFinished} size="small" color='secondary' />}
                     />
                     <select className="block w-40 p-2 mb-2 text-sm
-                        text-gray-800 border border-gray-200 rounded-lg bg-gray-10 outline-0 dark:text-white" 
+                        text-gray-800 border border-gray-200 rounded-lg bg-gray-10 outline-0" 
                             onChange={handleSelectGenre} value={genre}>
                             {selectList.map((item) => {
                                 return <option value={item.value} key={item.value}>{item.name}</option>;

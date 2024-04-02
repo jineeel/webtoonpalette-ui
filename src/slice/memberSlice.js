@@ -1,6 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/es/storage";
+import CryptoJS from "crypto-js";
+import createTransform from "redux-persist/lib/createTransform";
 
 const initialState = { 
     id: '',
@@ -36,15 +38,28 @@ const memberSlice = createSlice({
             state.social = '';
             state.role = '';
             state.genreNames = [];
-        }
-
-        
+        }   
     },
    
 })
+
+export const secretKey = process.env.REACT_APP_CRYPTO_SECRET_KEY;
+
+const encryptor = createTransform(
+    (inboundState, key) => {
+      // 암호화
+      return CryptoJS.AES.encrypt(JSON.stringify(inboundState), secretKey).toString();
+    },
+    (outboundState, key) => {
+      // 복호화
+      const bytes  = CryptoJS.AES.decrypt(outboundState, secretKey);
+      return JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+    }
+  );
 const persistConfig = {
     key: 'root',
-    storage
+    storage,
+    transforms: [encryptor]
 };
 
 const persistedReducer = persistReducer(persistConfig, memberSlice.reducer);

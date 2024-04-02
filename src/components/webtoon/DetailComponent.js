@@ -10,12 +10,13 @@ import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
 import { grey } from '@mui/material/colors';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import adult from '../../images/adult_icon.png'
-import CarouselComponent from '../../common/CarouselComponent';
 import { postFavorite, getFavorite, deleteFavorite } from '../../api/favoriteApi';
 import { useSelector } from 'react-redux';
 import useCustomLogin from '../../hooks/useCustomLogin'
 import LoginModalComponent from '../../common/LoginModalComponent';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import WebtoonCardComponent from '../../common/WebtoonCardComponent';
+import useDidMountEffect from '../../hooks/useDidMountEffect';
 
 const initData = {
     id : 0,
@@ -52,12 +53,6 @@ function DetailComponent({id, genre}) {
     const memberId = memberInfo.id
     const webtoonId = id;
 
-    // useEffect(()=>{
-    //     localStorage.setItem('redirect', value);
-    //     return () => {
-    //         localStorage.removeItem('redirect');
-    //     }
-    // },[])
 
     useEffect(()=>{
         get(id).then(data => {
@@ -72,9 +67,12 @@ function DetailComponent({id, genre}) {
 
 
     useEffect(()=>{
+        
         if(memberId != ''){
             getFavorite({memberId, webtoonId}).then(data=>{
+
                 setFavorite(data.result)
+
                 if(data.result>0){
                     setFavoriteColor("red")
                 }else{
@@ -82,6 +80,7 @@ function DetailComponent({id, genre}) {
                 }
             })
         }
+
     },[id,favorite])
 
     const postUrl = () =>{
@@ -157,12 +156,13 @@ function DetailComponent({id, genre}) {
                             <Button variant="outlined" sx={{width:60, height:60, ml:1}} color='secondary'><CreateNewFolderIcon color='secondary'/></Button>
                         </div>
                     </div>
-            </div>
-            
+            </div>            
             </Container>
+            
             {/* + Comment */}
             <Container maxWidth='xl'>
-                <CarouselComponent serverData={serverData}/>
+                <Typography variant='h5' sx={{fontWeight:600, mt:5, mb:6, ml:12, pt:5, borderTop:1,  borderColor:'inherit'}}> 이 작품과 비슷한 작품</Typography>
+                <WebtoonCardComponent serverData={serverData}/>
             </Container>
 
         </div>

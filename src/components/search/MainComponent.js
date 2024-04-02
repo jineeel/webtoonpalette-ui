@@ -20,7 +20,7 @@ function MainComponent(props) {
 
     useEffect(()=>{
         const memberId = memberInfo.id
-         getSearch({keyword, fin,memberId}).then(data => {
+         getSearch({keyword, fin, memberId}).then(data => {
              setServerData(data)
          })
     },[keyword,favorite])

@@ -17,6 +17,7 @@ import { useSelector } from 'react-redux';
 import { Container } from '@mui/material';
 import useCustomValue from '../../hooks/useCustomValue';
 import useCustomLogin from '../../hooks/useCustomLogin';
+import useDidMountEffect from '../../hooks/useDidMountEffect';
 
 const initState = {
     dtoList:[], pageNumList:[], pageRequestDTO: null, prev: false, next: false,
@@ -40,16 +41,16 @@ function FavoriteComponent(props) {
         // movePlatformList({ platform: newValue, genre:genre });
     };
    
-    useEffect(() => {
+    useDidMountEffect(() => {
         localStorage.setItem('tabValue',selectTab);
     },[selectTab])
 
-    useEffect(() => {
+    useDidMountEffect(() => {
         moveToFavorite({genre:genre})
         localStorage.setItem('genreSelected', genre);
     },[genre])
 
-    useEffect(() => {
+    useDidMountEffect(() => {
         moveToFavorite({page:page, genre:genre})
     },[page])
 
@@ -81,7 +82,7 @@ function FavoriteComponent(props) {
                 
                 <TabPanel value="webtoon">
                         <select className="block w-40 p-2 mb-2 text-sm
-                            text-gray-800 border border-gray-200 rounded-lg bg-gray-10 outline-0 dark:text-white" 
+                            text-gray-800 border border-gray-200 rounded-lg bg-gray-10 outline-0" 
                             onChange={handleSelectGenre} value={genre}>
                             {selectList.map((item) => {
                                 return <option value={item.value} key={item.value}>{item.name}</option>;

@@ -59,7 +59,7 @@ function RankComponent(props) {
                         control={<Checkbox checked={fin} onChange={checkFinished} size="small" color='secondary' />}
                     />
                     <select className="block w-40 p-2 mb-2 text-sm
-                        text-gray-800 border border-gray-200 rounded-lg bg-gray-10 outline-0 dark:text-white" 
+                        text-gray-800 border border-gray-200 rounded-lg bg-gray-10 outline-0" 
                             onChange={handleSelectGenre} value={genre}>
                             {selectList.map((item) => {
                                 return <option value={item.value} key={item.value}>{item.name}</option>;

@@ -1,11 +1,13 @@
 import React from 'react';
-import BasicLayout from "../../layouts/BasicLayout";
 import { Container } from '@mui/material';
-// import WebtoonCardComponent from '../../common/WebtoonCardComponent';
+import MainComponent from '../../components/webtoon/MainComponent';
+
+
 
 function MainPage(props){
     return (
         <Container maxWidth="xl">
+            <MainComponent />
         </Container>
     );
 

@@ -8,7 +8,6 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import PageComponent from '../../common/PageComponent';
 import { todayOfWeek } from '../../common/convertValue';
-import useCustomLogin from '../../hooks/useCustomLogin';
 import { useSelector } from 'react-redux';
 
 const initState = {
@@ -18,7 +17,7 @@ const initState = {
 const value = 'today'
 
 function TodayComponent(props) {
-    const tabValue = localStorage.getItem("tabValue") ? localStorage.getItem("tabValue") : todayOfWeek();
+    const tabValue = localStorage.getItem("todayValue") ? localStorage.getItem("todayValue") : todayOfWeek();
 
     const {page, size, moveTodayList, refresh} = useCustomMove()
     const [serverData, setServerData] = useState(initState);
@@ -26,22 +25,17 @@ function TodayComponent(props) {
     const memberInfo = useSelector(state => state.memberSlice)
     const [favorite, setFavorite] = useState(false);
     const fin = true;
-  
+
     useEffect(() => {
-        localStorage.setItem('tabValue',updateDay);
+        localStorage.setItem('todayValue',updateDay);
       }, [updateDay]);
 
     const handleChange = (event, newValue) => {
         setUpdateDay(newValue);
-        moveTodayList({ updateDay: newValue });
+        moveTodayList({ updateDay: newValue});
         
     };
 
-    useEffect(()=>{
-        moveTodayList({ page:page, updateDay: updateDay });
-    },[])
-    
-    //페이지가 변경되면 스크롤을 올린다.
     useEffect(()=>{
         window.scrollTo(0,0)
     },[page])

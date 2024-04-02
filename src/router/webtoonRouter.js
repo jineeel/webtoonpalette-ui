@@ -12,10 +12,10 @@ const webtoonRouter = () => {
     return [
         {
             path: '',
-            element: <Navigate replace to={''}/>
+            element: <Navigate replace to={'main'}/>
         },
         {
-            path: '',
+            path: 'main',
             element: <Suspense><Main /></Suspense>
         },
         {

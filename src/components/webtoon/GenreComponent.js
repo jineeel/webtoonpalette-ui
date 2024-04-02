@@ -12,6 +12,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Typography from '@mui/material/Typography';
 import useCustomValue from '../../hooks/useCustomValue';
 import { useSelector } from 'react-redux';
+import useDidMountEffect from '../../hooks/useDidMountEffect';
 
 const initState = {
     dtoList:[], pageNumList:[], pageRequestDTO: null, prev: false, next: false,
@@ -20,8 +21,8 @@ const initState = {
 const value = 'genre'
 
 function GenreComponent(props) {
-    const tabValue = localStorage.getItem("tabValue") ? localStorage.getItem("tabValue") : "ROMANCE";
-    const {page, size, moveGenreList, refresh} = useCustomMove()
+    const tabValue = localStorage.getItem("genreSelected") ? localStorage.getItem("genreSelected") : "ROMANCE";
+    const {page, size, moveGenreList} = useCustomMove()
     const [serverData, setServerData] = useState(initState);
     const [genre, setGenre] = useState(tabValue);
     const { fin, checkFinished }= useCustomValue()
@@ -37,8 +38,8 @@ function GenreComponent(props) {
         localStorage.setItem('isChecked', JSON.stringify(fin));
       }, [fin]);
 
-    useEffect(()=>{
-        localStorage.setItem('tabValue',genre);
+    useDidMountEffect(()=>{
+        localStorage.setItem('genreSelected',genre);
         moveGenreList({ page: page, genre: genre});
     },[genre])
 
@@ -48,11 +49,13 @@ function GenreComponent(props) {
     },[page])
 
     useEffect(()=>{
+
         const memberId = memberInfo.id
+
         getList({page,size,genre,fin,value,memberId}).then(data =>{
             setServerData(data)
         })
-    }, [page,size,genre,refresh,fin,favorite]);
+    }, [page,size,genre,fin,favorite]);
 
     const changeFavoriteState = () =>{
         setFavorite(!favorite)
@@ -62,6 +65,7 @@ function GenreComponent(props) {
         <div>
               <TabContext value={genre}>
                 <TabList onChange={handleChange} centered className='mb-0 mt-0' indicatorColor='secondary' textColor='secondary'>
+                    <Tab label="전체" value="ALL" />
                     <Tab label="로맨스" value="ROMANCE" />
                     <Tab label="판타지" value="FANTASY" />
                     <Tab label="로맨스판타지" value="ROMANCE_FANTASY" />

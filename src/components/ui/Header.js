@@ -29,6 +29,7 @@ function Header(props) {
   const handleClickMenu = () => {
     localStorage.removeItem('tabValue')
     localStorage.removeItem('genreSelected')
+    localStorage.removeItem('todayValue')
   }
 
   return (
@@ -39,6 +40,7 @@ function Header(props) {
           borderBottom: 1,
           borderColor: "divider",
         }}
+        onClick={handleClickMenu} 
       >
         <img
           src={logo}
@@ -52,7 +54,7 @@ function Header(props) {
         <div className='flex'>
           <SearchComponent />
           <IconButton sx={{ mr: 1}} component={Link} to="/member/palette"><PaletteIcon fontSize="small" /></IconButton>
-          <IconButton sx={{ mr: 1 }} onClick={handleClickMenu} component={Link} to="/member/favorite"><FavoriteIcon fontSize="small" /></IconButton>
+          <IconButton sx={{ mr: 1 }} component={Link} to="/member/favorite"><FavoriteIcon fontSize="small" /></IconButton>
 
           {loginState.providerId ?
             <Link to={'/member/mypage'}><img src={ imgFile ? imgFile :  profileIcon} alt="" className='size-12 rounded-full object-cover'/></Link>
@@ -63,8 +65,8 @@ function Header(props) {
 
       <nav id='navbar' className="flex">
           <div className="w-4/5" >
-              <ul className="flex p-4 text-neutral-600 font-medium" onClick={handleClickMenu}>
-                <li className="px-4 hover:text-neutral-900"> <Link to={'/'}>추천 웹툰</Link> </li>
+              <ul className="flex p-4 text-neutral-800 font-medium" onClick={handleClickMenu}>
+                <li className="px-4 hover:text-neutral-900"> <Link to={'/main'}>추천 웹툰</Link> </li>
                 <li className="px-4 hover:text-neutral-900"> <Link to={'/today'}>오늘의 웹툰</Link> </li>
                 <li className="px-4 hover:text-neutral-900"> <Link to={'/genre'}>장르</Link> </li>
                 <li className="px-4 hover:text-neutral-900"> <Link to={'/rank'}>랭킹</Link> </li>
