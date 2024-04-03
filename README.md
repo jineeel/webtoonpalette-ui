@@ -1,70 +1,55 @@
-# Getting Started with Create React App
+# Webtoon Palette 웹툰 팔레트 🎨
+### 스프링부트 · 리액트 프로젝트
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+<img src="https://github.com/jineeel/webtoonpalette-ui/assets/143826467/70e3735e-18c8-41c4-acd7-bd6f87015424.png" width="1000"/>
 
-In the project directory, you can run:
+## 📑 프로젝트 소개
+#### 사용자의 취향대로 그려가는 웹툰 추천 서비스
+사용자의 장르 취향을 반영하여 웹툰을 추천하고 
+네이버/카카오 웹툰을 모아볼 수 있는 서비스 프로젝트 입니다.
 
-### `npm start`
+### 개발 기간
+2024.03.05 ~ 진행 중
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### 개발 인원
+2인
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 개발 환경
+- Java, Spring Boot, Spring Security, OAuth2.0, JWT, JPA
+- React, TailwindCSS, MUI
+- MariaDB
 
-### `npm test`
+## 📌 주요 기능
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 웹툰 조회
+- 메인페이지 (사용자 선호 장르 반영하여 추천)
+- 요일별 웹툰
+- 장르별 웹툰
+- 웹툰 랭킹
+- 플랫폼 별 웹툰
+- 검색 (웹툰 제목, 작가명)
 
-### `npm run build`
+### 회원
+- OAuth2.0 네이버, 카카오, 구글 소셜 로그인
+- 회원 정보 수정
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 팔레트 (개발 예정)
+- 팔레트 추가/조회/수정/삭제
+- 팔레트에 웹툰 추가/수정/삭제
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 좋아요
+- 웹툰 좋아요/좋아요 취소
+- 팔레트 좋아요/좋아요 취소
+- 사용자 좋아요 목록 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 댓글 (개발 예정)
+- 웹툰 댓글 추가/수정/삭제
+- 팔레트 댓글 추가/수정/삭제
+- 사용자가 작성한 댓글 목록
 
-### `npm run eject`
+### 날씨 API를 사용한 웹툰 추천 (개발 예정)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### 관리자 페이지 (개발 예정)
+- 웹툰 추가/수정/삭제
+- 이벤트 게시판 추가/조회/수정/삭제
